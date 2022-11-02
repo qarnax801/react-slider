@@ -1,0 +1,15 @@
+// Custom stylesheet
+
+// In case someone wants to overwrite the default style in the index, they just have to
+// specify the parent classname (theSlider) and then put the children classes like so
+// I'm keeping the classes separate (no hierarchy) so it's easier to target children
+
+.theSlider {
+    .slider {
+        background-color: orange;
+    }
+    .card {
+        border: 3px solid red;
+        text-align: left;
+    }
+}
