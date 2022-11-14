@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./controls/Button";
-import Dots from "./controls/Dots";
+import Dot from "./controls/Dot";
 
 import { SliderDataProps } from "./data/default";
 
@@ -17,26 +17,37 @@ export default function Slider({
   colored = false,
   custom = false,
 }: SliderProps) {
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [state, setState] = useState({
+    slideIndex: 0,
+  });
 
   const previousSlide = () => {
-    if (slideIndex === 0) {
-      setSlideIndex(sliderData.length - 1);
+    if (state.slideIndex === 0) {
+      setState({ ...state, slideIndex: sliderData.length - 1 });
     } else {
-      setSlideIndex(slideIndex - 1);
+      setState({ ...state, slideIndex: state.slideIndex - 1 });
     }
   };
 
   const nextSlide = () => {
-    if (slideIndex === sliderData.length - 1) {
-      setSlideIndex(0);
+    if (state.slideIndex === sliderData.length - 1) {
+      setState({ ...state, slideIndex: 0 });
     } else {
-      setSlideIndex(slideIndex + 1);
+      setState({ ...state, slideIndex: state.slideIndex + 1 });
     }
   };
 
-  const dotSwitch = (id: number) => {
-    setSlideIndex(id);
+  const handleActive = (i: any) => {
+    if (state.slideIndex === i) {
+      return setState({
+        ...state,
+        slideIndex: state.slideIndex,
+      });
+    }
+    setState({
+      ...state,
+      slideIndex: i,
+    });
   };
 
   return (
@@ -49,7 +60,7 @@ export default function Slider({
               return (
                 <div
                   className={`
-                    ${slide.id === slideIndex ? "card" : "cardHidden"}
+                    ${slide.id === state.slideIndex ? "card" : "cardHidden"}
                     ${`` /* List slide effects down here */}
                     ${faded ? "cardFaded" : ""}
                     ${colored ? "cardColored" : ""}
@@ -68,7 +79,20 @@ export default function Slider({
               );
             })}
           </div>
-          <Dots dotSwitch={dotSwitch} sliderData={sliderData} />
+
+          {/* Dots */}
+          <div className="dots">
+            {sliderData.map((slide, i) => (
+              <Dot
+                i={i}
+                handleClick={() => {
+                  handleActive(i);
+                }}
+                key={slide.id}
+                active={state.slideIndex === i}
+              />
+            ))}
+          </div>
         </div>
         <Button moveSlide={nextSlide} />
       </div>
