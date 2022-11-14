@@ -74,6 +74,10 @@
   background-color: darkslategray;
   color: white;
   text-align: center;
+
+  &Active {
+    background-color: orange;
+  }
 }
 
 .button {
