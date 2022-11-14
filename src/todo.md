@@ -1,4 +1,5 @@
 # To do:
+- Add custom dots
 - Polish general styling
 - Make the default slider as generic as possible
     - Base this upon the most commonly used carousels
